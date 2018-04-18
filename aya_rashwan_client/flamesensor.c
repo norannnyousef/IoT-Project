@@ -5,8 +5,7 @@
 #include <Python.h>
 
 #define ANALOG_PIN 0
-#define DIGITAL_PIN 7
-#define THRESHOLD 700
+#define THRESHOLD 600
 
 extern "C"
 const char* return_string()
@@ -23,24 +22,6 @@ const char* return_string()
         return "cant initialize adc";
     }
  
-	    /* Init Digital pin */
-    gpio = mraa_gpio_init(DIGITAL_PIN);
-    if (gpio == NULL) {
-        fprintf(stderr, "[-] Initialisation of pin %d"\
-                "failed. Is this pin exist on your platform?\n",
-                DIGITAL_PIN);
-        return "can't initialize output object";
-    }
-    printf("[+] Pin %d is initialised\n", DIGITAL_PIN);
- 
-    /* Set Digital pin direction */
-    result = mraa_gpio_dir(gpio, MRAA_GPIO_OUT);
-    if (result != MRAA_SUCCESS) {
-        mraa_result_print(result);
-        printf("[+] Pin %d is not initialised correctly\n", DIGITAL_PIN);
-    } else {
-        printf("[+] Pin %d is initialised as output\n", DIGITAL_PIN);
-    }
  
  
     /* Infinite loop */
@@ -49,9 +30,11 @@ const char* return_string()
  
             /* Capture the sensor value */
            value = mraa_aio_read(adc);
+	printf("%d\n",value);
             /* Light up if the value is higher */
             if (value < THRESHOLD) {
                 //result = mraa_gpio_write(gpio, 0);
+		
                 return "board8, on";
             } else {
                 //result = mraa_gpio_write(gpio, 1);

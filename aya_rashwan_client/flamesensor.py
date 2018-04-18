@@ -4,10 +4,10 @@ import mraa
 import time
  
 from ctypes import *
-lib = cdll.LoadLibrary('./example.so')  
+lib = cdll.LoadLibrary("./example.so")  
 lib.return_string.restype = c_char_p
 s = socket.socket()         
-host = "192.168.3.2"   
+host = "169.254.155.152"   
 port = 5008              
  
 s.connect((host, port))
